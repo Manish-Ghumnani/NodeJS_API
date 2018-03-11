@@ -94,7 +94,26 @@ app.post('/api/retrievefornotifications', function(req, res) {
     let notification = req.body.notification;
 
     let students = notification.split(" ");
-    console.log(students[2].substring(1,students[2].length));
+    var subscribe_students = [];
+    for(var i=2; i<students.length; i++) {
+        subscribe_students.push(students[i].substring(1,students[i].length));
+    }
+    //console.log(subscribe_students);
+    //console.log(students[2].substring(1,students[2].length));
+    var recepients = [];
+
+    mc.query("select stud_email from student where suspension is null and (teach_email = ? or stud_email in (?))",[teacher, subscribe_students], function(error, results, fields) {
+        if(error) throw error;
+        //console.log(results);
+        for(var i=0; i<results.length; i++) {
+            recepients.push(results[i].stud_email);
+        }
+        var recepient_list = {
+            recepients : recepients
+        }
+        res.contentType('application/json');
+        return res.send({error: false, data: recepient_list, message:"Successfully retrieved!"});
+    });
 });
 
 // port must be set to 8080 because incoming http requests are routed from port 80 to port 8080
