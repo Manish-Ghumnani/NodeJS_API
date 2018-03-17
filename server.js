@@ -7,15 +7,15 @@ app.use(bodyParser.json());
  
 // connection configurations
 const mc = mysql.createConnection({
-    host: 'localhost',
+    host: 'mysql',
     user: 'root',
     password: 'manish',
-    database: 'test'
+    database: 'test',
+    charset: 'utf8'
 });
  
 // connect to database
-mc.connect();
- 
+mc.connect(); 
  
 // default route
 app.get('/', function (req, res) {
@@ -35,11 +35,10 @@ app.post('/api/register', function(req, res) {
     let students = req.body.students;
 
     if(!teacher || !students) {
-        return res.status(400).send({ error: true, message: "Invalid Request"});
+        res.status(400).send({ error: true, message: "Invalid Request"});
     }
 
     var data;
-
     for(var i = 0; i< students.length; i++) {
     
         data = {
@@ -48,22 +47,35 @@ app.post('/api/register', function(req, res) {
         }
 
         mc.query("insert into student set ?", data , function (error, results, fields) {
-            if (error) throw error;
-            return res.status(204).send({error: false, message: "Students successfully added!"});
+            if (error)
+            {
+                flag = 0;
+                console.log(error.stack);
+                console.log(error.code);
+                throw error;
+            }
+            return 0;
         });
     }
-    
+    res.status(200).send({error: false, message: "Students successfully added!"});
 })
  
 app.get('/api/commonstudents', function(req,res) {
     var teach_email = req.query.teacher;
+    console.log(teach_email);
+    //teacher_list = [];
+    var count = teach_email.length;
+    if(typeof teach_email === 'string'){
+        count = 1;
+    }
 
     if (!teach_email) {
-        return res.status(400).send({ error: true, message: 'Invalid Request!' });
+        res.status(400);
+        return res.send({ error: true, message: 'Invalid Request!' });
     }
     //console.log(teach_email);
     
-    mc.query("select distinct stud_email from student where teach_email=?", teach_email, function(error, results, fields) {
+    mc.query("select stud_email from student where teach_email in (?) group by stud_email having count(distinct teach_email) = ?", [teach_email, count], function(error, results, fields) {
         if (error) throw error;
         var student_list = [];
         //console.log(fields)
@@ -84,7 +96,7 @@ app.post('/api/suspend', function(req, res) {
     mc.query("update student set suspension = 1 where stud_email=?", student, function(error, results, fields) {
         if(error) throw error;
         console.log(results);
-        res.status(204);
+        res.status(200);
         return res.send({error: false, message: "Student suspended!"});
     });
 });

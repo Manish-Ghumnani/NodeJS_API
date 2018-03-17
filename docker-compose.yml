@@ -1,0 +1,19 @@
+version: '2.1'
+services:
+    mysql:
+        build: ./db_stuff
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+        healthcheck:
+            test: "exit 0"
+    
+    node_api:
+        command: nodemon server.js
+        build: .
+        volumes:
+            - . :/app  
+        depends_on:
+            mysql:
+                condition: service_healthy
+        ports:
+            - "49160:8080"
