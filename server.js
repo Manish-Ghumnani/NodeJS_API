@@ -118,7 +118,7 @@ app.post('/api/retrievefornotifications', function(req, res) {
 
     var recepients = [];
 
-    mc.query("select stud_email from student where suspension is null and (teach_email = ? or stud_email in (?))",[teacher, subscribe_students], function(error, results, fields) {
+    mc.query("select distinct stud_email from student where suspension is null and (teach_email = ? or stud_email in (?))",[teacher, subscribe_students], function(error, results, fields) {
         if(error) throw error;
         for(var i=0; i<results.length; i++) {
             recepients.push(results[i].stud_email);
@@ -136,7 +136,6 @@ app.post('/api/retrievefornotifications', function(req, res) {
 app.listen(8080);
 
 console.log('Node app is running on port 8080');
-
 /**
  * Export the Express app so that it can be used by Chai
  */
