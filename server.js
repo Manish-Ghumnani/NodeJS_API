@@ -7,7 +7,7 @@ app.use(bodyParser.json());
  
 // connection configurations
 const mc = mysql.createConnection({
-    host: 'mysql',
+    host: 'localhost',
     user: 'root',
     password: 'manish',
     database: 'test',
@@ -114,11 +114,12 @@ app.post('/api/retrievefornotifications', function(req, res) {
     //console.log(students[2].substring(1,students[2].length));
     var recepients = [];
 
-    mc.query("select stud_email from student where suspension is null and (teach_email = ? or stud_email in (?))",[teacher, subscribe_students], function(error, results, fields) {
+    mc.query("select distinct stud_email from student where suspension is null and (teach_email = ? or stud_email in (?))",[teacher, subscribe_students], function(error, results, fields) {
         if(error) throw error;
-        //console.log(results);
+        console.log(results);
         for(var i=0; i<results.length; i++) {
             recepients.push(results[i].stud_email);
+	    console.log(results[i].stud_email);
         }
         var recepient_list = {
             recepients : recepients
