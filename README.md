@@ -34,8 +34,8 @@ npm install express body-parser --save
 npm install mocha chai chai-http --save-dev
 ```
 
-1. Running the app 
-var host = 'localhost';   //change in server.js
+1. Running the app ->
+  var host = 'localhost';   //change in server.js
 
  * Open terminal(in the project directory) and enter
 ```
@@ -45,16 +45,15 @@ Access through ->
 url: http://localhost:8080/api
 
 
-2. Running inside a Docker Compose
-var host = 'mysql';    //change in server.js 
+2. Running inside a Docker ->
+  var host = 'mysql';    //change in server.js 
 
 Go to the project folder:
   * Open terminal with the project path and run 
 ```
 docker-compose up --build
 ```
-  * Open one more terminal and run 
-    Here nodeassignment_mysql_1 is the mysql container, run docker ps to check the name of the container created for you.
+  * Open one more terminal and run the following:
  ```
 docker exec -it nodeassignment_mysql_1 bash     
 mysql
@@ -75,10 +74,10 @@ CREATE TABLE IF NOT EXISTS student
   PRIMARY KEY (stud_id)
 ) DEFAULT CHARSET=utf8;
  ```
+Here nodeassignment_mysql_1 is the mysql container, run docker ps to check the name of the container created for you. 
+
 Access through ->
 url: http://localhost:49160/api
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
