@@ -4,12 +4,12 @@ const mysql = require('mysql');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
- 
+var host = 'localhost';
 // connection configurations
 const mc = mysql.createConnection({
-    host: 'mysql',
+    host: host,
     user: 'root',
-    password: 'manish',
+    password: 'manish', 
     database: 'test',
     charset: 'utf8'
 });
@@ -133,7 +133,7 @@ app.post('/api/retrievefornotifications', function(req, res) {
 });
 
 // port must be set to 8080 because incoming http requests are routed from port 80 to port 8080
-app.listen(8080, host);
+app.listen(8080);
 
 console.log('Node app is running on port 8080');
 
