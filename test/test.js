@@ -38,7 +38,7 @@ describe('API endpoint /api', function() {
         "teacher": "teacherken@gmail.com",
         "students":
           [
-            "studentjon@example.com"
+            "studentjon2@example.com"
           ]
       })
       .then(function(res) {
@@ -73,7 +73,7 @@ describe('API endpoint /api', function() {
     return chai.request(app)
     .post('/api/suspend')
     .send({
-        "student" : "studentmary@gmail.com"
+        "student" : "studentjon@example.com"
     })
     .then(function(res) {
         expect(res).to.have.status(200);
