@@ -1,3 +1,4 @@
+
 # NodeJS_API
 
 A System for teachers to perform admin functions for their students. 
@@ -73,6 +74,8 @@ CREATE TABLE IF NOT EXISTS student
   suspension tinyint(1) DEFAULT NULL,
   PRIMARY KEY (stud_id)
 ) DEFAULT CHARSET=utf8;
+CREATE UNIQUE INDEX student_teacher
+ON student (stud_email, teach_email);
  ```
 Here nodeassignment_mysql_1 is the mysql container, run docker ps to check the name of the container created for you. 
 
