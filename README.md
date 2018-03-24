@@ -21,7 +21,7 @@ node js (server)
 express js (api)
 mocha & chai (unit testing)
 mysql (db)
-docker (  not in scope)
+docker (not in scope)
 ```
 
 ### Installing
@@ -34,8 +34,8 @@ npm install express body-parser --save
 npm install mocha chai chai-http --save-dev
 ```
 
-1. Running the app 
-host: 'localhost'   //change in server.js
+1. Running the app ->
+  var host = 'localhost';   //change in server.js
 
  * Open terminal(in the project directory) and enter
 ```
@@ -45,16 +45,15 @@ Access through ->
 url: http://localhost:8080/api
 
 
-2. Running inside a Docker Compose
-host: 'mysql'    //change in server.js 
+2. Running inside a Docker ->
+  var host = 'mysql';    //change in server.js 
 
 Go to the project folder:
   * Open terminal with the project path and run 
 ```
 docker-compose up --build
 ```
-  * Open one more terminal and run 
-    Here nodeassignment_mysql_1 is the mysql container, run docker ps to check the name of the container created for you.
+  * Open one more terminal and run the following:
  ```
 docker exec -it nodeassignment_mysql_1 bash     
 mysql
@@ -75,10 +74,10 @@ CREATE TABLE IF NOT EXISTS student
   PRIMARY KEY (stud_id)
 ) DEFAULT CHARSET=utf8;
  ```
-Access through ->
-url: http://localhost:8080/api
+Here nodeassignment_mysql_1 is the mysql container, run docker ps to check the name of the container created for you. 
 
-End with an example of getting some data out of the system or using it for a little demo
+Access through ->
+url: http://localhost:49160/api
 
 ## Running the tests
 
@@ -87,11 +86,23 @@ End with an example of getting some data out of the system or using it for a lit
 npm test
 ```
 
-## Deployment
-In progress
-
 ## Screenshots
+## Tested on public cloud
+
+### 1. As a teacher, I want to be able to register one or more students to a specified teacher.
+![alt text](/screens/api_register.png "Title")
+
+### 2. As a teacher, I want to be able to provide a list of teachers and retrieve a list of students common to all of them (i.e. students who are registered to ALL of them).
+![alt text](/screens/api_commonstudents_singleteacher.png "Title")
+
+![alt text](/screens/api_commonstudents_multipleteachers.png "Title")
 
 
+### 3. As a teacher, I want to be able to suspend a specified student.
+![alt text](/screens/api_suspend.png "Title")
+
+
+### 4. As a teacher, I should be able to retrieve all student emails that can receive notifications from a teacher's email.
+![alt text](/screens/api_retreivenotifications.png "Title")
 
 
